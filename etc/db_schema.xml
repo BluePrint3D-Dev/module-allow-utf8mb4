@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+
+    <!-- Override Catalog Varchar -->
+    <table name="catalog_product_entity_varchar" resource="default" engine="innodb" charset="utf8mb4" collation="utf8mb4_unicode_ci"/>
+
+    <!-- Override Catalog Text -->
+    <table name="catalog_product_entity_text" resource="default" engine="innodb" charset="utf8mb4" collation="utf8mb4_unicode_ci"/>
+
+    <!-- Override CMS Block -->
+    <table name="cms_block" resource="default" engine="innodb" charset="utf8mb4" collation="utf8mb4_unicode_ci"/>
+
+    <!-- Override CMS Page -->
+    <table name="cms_page" resource="default" engine="innodb" charset="utf8mb4" collation="utf8mb4_unicode_ci"/>
+
+</schema>

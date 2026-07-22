@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright (c) 2026 BluePrint3D Ltd. All rights reserved.
+ * 
+ * This software is provided free of charge for personal or commercial use.
+ * Resale, redistribution, or sublicensing of this source code, modified or 
+ * unmodified, for direct financial gain is strictly prohibited.
+ *
+ * @author    BluePrint3D Ltd <support@blueprint3d.dev>
+ * @copyright 2026 BluePrint3D Ltd (Company No. 13473806)
+ * @license   Custom Proprietary EULA (See LICENSE.txt)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Ui\Component\AbstractComponent">
+        <plugin name="blueprint3d_allow_utf8mb4_strip_ui"
+                type="BluePrint3D\AllowUtf8mb4\Plugin\Ui\Component\AbstractComponentPlugin"
+                sortOrder="10"/>
+    </type>
+    <type name="Magento\Eav\Model\Entity\Attribute\AbstractAttribute">
+        <plugin name="blueprint3d_allow_utf8mb4_strip_eav"
+                type="BluePrint3D\AllowUtf8mb4\Plugin\Eav\AttributePlugin"
+                sortOrder="10"/>
+    </type>
+</config>

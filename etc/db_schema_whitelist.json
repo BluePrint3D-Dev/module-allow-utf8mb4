@@ -1,0 +1,22 @@
+{
+  "catalog_product_entity_varchar": {
+    "column": {},
+    "index": {},
+    "constraint": {}
+  },
+  "catalog_product_entity_text": {
+    "column": {},
+    "index": {},
+    "constraint": {}
+  },
+  "cms_block": {
+    "column": {},
+    "index": {},
+    "constraint": {}
+  },
+  "cms_page": {
+    "column": {},
+    "index": {},
+    "constraint": {}
+  }
+}

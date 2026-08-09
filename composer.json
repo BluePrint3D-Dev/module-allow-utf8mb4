@@ -1,6 +1,6 @@
 {
   "name": "blueprint3d/module-allow-utf8mb4",
-  "description": "Unlocks full UTF8MB4 database support for Magento 2 (Emojis and 4-byte characters).",
+  "description": "Unlocks full UTF8MB4 database support for Magento 2 (Emojis and 4-byte characters)",
   "type": "magento2-module",
   "license": "proprietary",
   "authors": [

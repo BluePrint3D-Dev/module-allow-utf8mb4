@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright (c) 2026 BluePrint3D Ltd. All rights reserved.
+ *
+ * This software is provided free of charge for personal or commercial use.
+ * Resale, redistribution, or sublicensing of this source code, modified or
+ * unmodified, for direct financial gain is strictly prohibited.
+ *
+ * @author    BluePrint3D Ltd <support@blueprint3d.dev>
+ * @copyright 2026 BluePrint3D Ltd (Company No. 13473806)
+ * @license   Custom Proprietary EULA (See LICENSE.txt)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!--
+        Note: a plugin on Magento\Setup\Console\Command\UpgradeCommand does NOT work here -
+        Magento's setup:* commands bootstrap outside the normal DI/interception chain, so
+        plugins on them silently never fire. Charset reassertion instead happens via the
+        blueprint3d:utf8mb4:convert CLI command (run manually after deploys) and the
+        blueprint3d_allowutf8mb4_reassert_charset cron job (etc/crontab.xml) as a safety net.
+    -->
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="blueprint3d_utf8mb4_convert" xsi:type="object">BluePrint3D\AllowUtf8mb4\Console\Command\ConvertCommand</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

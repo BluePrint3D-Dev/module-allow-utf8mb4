@@ -4,31 +4,41 @@
  */
 namespace BluePrint3D\AllowUtf8mb4\Setup\Patch\Schema;
 
-use BluePrint3D\AllowUtf8mb4\Model\Utf8Mb4Converter;
 use Magento\Framework\Setup\Patch\SchemaPatchInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 
-/**
- * Runs once on install. Schema patches never re-run on later setup:upgrade calls,
- * so this alone isn't enough to keep the columns on utf8mb4 - see
- * Plugin\Setup\ReassertUtf8Mb4Plugin, which re-applies the same conversion after
- * every setup:upgrade.
- */
 class ConvertExistingColumnsToUtf8mb4 implements SchemaPatchInterface
 {
     private $moduleDataSetup;
-    private $converter;
 
-    public function __construct(ModuleDataSetupInterface $moduleDataSetup, Utf8Mb4Converter $converter)
+    public function __construct(ModuleDataSetupInterface $moduleDataSetup)
     {
         $this->moduleDataSetup = $moduleDataSetup;
-        $this->converter = $converter;
     }
 
     public function apply()
     {
         $this->moduleDataSetup->startSetup();
-        $this->converter->convert();
+        $connection = $this->moduleDataSetup->getConnection();
+
+        // The tables that need forcing
+        $tables = [
+            'catalog_product_entity_varchar',
+            'catalog_product_entity_text',
+            'cms_block',
+            'cms_page'
+        ];
+
+        foreach ($tables as $table) {
+            // getTable() ensures we support customers with DB prefixes (e.g., mg_cms_block)
+            $tableName = $this->moduleDataSetup->getTable($table);
+
+            if ($connection->isTableExists($tableName)) {
+                $sql = "ALTER TABLE `{$tableName}` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;";
+                $connection->query($sql);
+            }
+        }
+
         $this->moduleDataSetup->endSetup();
         return $this;
     }

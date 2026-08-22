@@ -3,8 +3,11 @@
 <p>
     <a href="#"><img src="https://img.shields.io/badge/Magento-2.4.x-orange.svg" alt="Magento Version" /></a>
     <a href="#"><img src="https://img.shields.io/badge/PHP-8.1%20|%208.2%20|%208.3-blue.svg" alt="PHP Version" /></a>
+    <a href="#"><img src="https://img.shields.io/badge/MySQL-8.4%2B%20%7C%20MariaDB-orange.svg" alt="MySQL Version" /></a>
     <a href="#"><img src="https://img.shields.io/badge/License-Proprietary-lightgrey.svg" alt="License" /></a>
 </p>
+
+<p>⚠️ <strong>Requires MySQL 8.4+</strong> (or an equivalent modern MariaDB). Below MySQL 8.0.29, Magento's own declarative schema has no way to keep these columns on <code>utf8mb4</code> across repeated <code>setup:upgrade</code> runs, and this module's one-shot patch alone isn't enough to guarantee it stays fixed — see <a href="#-the-fine-print">the fine print</a> below before installing on an older database.</p>
 
 <p>A lightweight, bulletproof Magento 2 module that permanently enables <code>utf8mb4</code> encoding across your database. Finally, you can use emojis, extended multilingual characters, and complex Unicode symbols anywhere in your store without Magento destroying them.</p>
 
@@ -47,6 +50,12 @@ php bin/magento cache:flush</code></pre>
 
 <h2>👨‍💻 Usage</h2>
 <p>There is no Admin UI required. Once installed and upgraded, the module works silently in the background. Simply go to <strong>Content &gt; Blocks</strong> or <strong>Catalog &gt; Products</strong> and start pasting emojis! 🚀🍕🛒</p>
+
+<hr />
+
+<h2 id="-the-fine-print">🔍 The Fine Print</h2>
+<p>Magento's declarative schema has no column-level <code>charset</code>/<code>collation</code> attribute (only table-level), so on MySQL below 8.0.29, every <code>setup:upgrade</code> silently regenerates these columns using Magento's own legacy default charset — undoing the conversion, regardless of what this module declares. This isn't fixable purely from <code>db_schema.xml</code>.</p>
+<p>On MySQL 8.4+ (or a modern MariaDB), Magento's own framework defaults these columns to <code>utf8mb4</code> natively on every <code>setup:upgrade</code>, so this module's one-shot patch is all you need — it stays fixed with no further action. If you're still on an older MySQL version, upgrade the database first; don't rely on this module alone to keep emoji support working across future deploys.</p>
 
 <hr />
 
